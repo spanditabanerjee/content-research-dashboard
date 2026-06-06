@@ -1,9 +1,9 @@
-import { NormalizedRedditPost } from "./reddit";
+import { NormalizedNewsArticle } from "./news";
 
 export interface AnalysisResult {
   id: string;
   topic: string;
-  sourceContent: NormalizedRedditPost[];
+  sourceContent: NormalizedNewsArticle[];
   summary: string;
   linkedinPost: string;
   instagramCaption: string;

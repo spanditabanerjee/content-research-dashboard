@@ -3,40 +3,39 @@ You analyze community discussions and turn insights into engaging, platform-appr
 Be factual, concise, and avoid making claims not supported by the source material.
 Never invent statistics or quotes that are not present in the research context.`;
 
-export function formatRedditContentForPrompt(redditContent: string): string {
+export function formatSourceContentForPrompt(redditContent: string): string {
   try {
     const parsed: unknown = JSON.parse(redditContent);
 
     if (Array.isArray(parsed)) {
       return parsed
-        .map((post, index) => {
-          const item = post as Record<string, unknown>;
+        .map((article, index) => {
+          const item = article as Record<string, unknown>;
+
           const title = String(item.title ?? "Untitled");
-          const subreddit = String(item.subreddit ?? "unknown");
-          const score = String(item.score ?? 0);
-          const selftext = String(item.selftext ?? "").trim() || "No body text";
+          const source = String(item.source ?? "Unknown");
+          const selftext = String(item.selftext ?? "").trim();
           const url = String(item.url ?? "");
 
           return [
-            `Post ${index + 1}:`,
+            `Article ${index + 1}:`,
             `Title: ${title}`,
-            `Subreddit: r/${subreddit}`,
-            `Score: ${score}`,
-            `Content: ${selftext}`,
+            `Source: ${source}`,
+            `Content: ${selftext || "No content available"}`,
             `URL: ${url}`,
           ].join("\n");
         })
         .join("\n\n");
     }
   } catch {
-    // Use raw string when content is not JSON
+    // fallback
   }
 
   return redditContent.trim();
 }
 
 export function buildResearchContext(topic: string, redditContent: string): string {
-  const formattedPosts = formatRedditContentForPrompt(redditContent);
+  const formattedPosts = formatSourceContentForPrompt(redditContent);
 
   return `Research Topic: ${topic}
 
@@ -74,7 +73,7 @@ export function buildInstagramCaptionInstruction(): string {
 export function buildHashtagsInstruction(): string {
   return `Suggest 10-15 relevant hashtags that:
 - Mix popular hashtags (high reach) and niche hashtags (targeted audience)
-- Relate directly to the topic and subreddit themes
+- Relate directly to the topic and selftext themes
 - Are formatted as a single space-separated string (e.g., "#marketing #contentstrategy")
 - Do not include hashtags that are unrelated or banned/spammy`;
 }

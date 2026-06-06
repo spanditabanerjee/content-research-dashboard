@@ -1,11 +1,11 @@
 import type { Analysis } from "../types/prisma";
 import { AnalysisResult } from "../types/analysis";
 import { AnalysisListItem } from "../types/history";
-import { NormalizedRedditPost } from "../types/reddit";
+import { NormalizedNewsArticle } from "../types/news";
 
 export function parseSourceContent(
   sourceContent: string | null
-): NormalizedRedditPost[] {
+): NormalizedNewsArticle[] {
   if (!sourceContent) {
     return [];
   }
@@ -17,12 +17,13 @@ export function parseSourceContent(
       return [];
     }
 
-    return parsed.map((post) => {
-      const item = post as Record<string, unknown>;
+    return parsed.map((article) => {
+      const item = article as Record<string, unknown>;
+
       return {
         title: String(item.title ?? ""),
         selftext: String(item.selftext ?? ""),
-        subreddit: String(item.subreddit ?? ""),
+        source: String(item.source ?? ""),
         score: typeof item.score === "number" ? item.score : 0,
         url: String(item.url ?? ""),
       };
@@ -32,11 +33,15 @@ export function parseSourceContent(
   }
 }
 
-export function toAnalysisResult(analysis: Analysis): AnalysisResult {
+export function toAnalysisResult(
+  analysis: Analysis
+): AnalysisResult {
   return {
     id: analysis.id,
     topic: analysis.topic,
-    sourceContent: parseSourceContent(analysis.sourceContent),
+    sourceContent: parseSourceContent(
+      analysis.sourceContent
+    ),
     summary: analysis.summary ?? "",
     linkedinPost: analysis.linkedinPost ?? "",
     instagramCaption: analysis.instagramCaption ?? "",
@@ -46,7 +51,9 @@ export function toAnalysisResult(analysis: Analysis): AnalysisResult {
   };
 }
 
-export function toAnalysisListItem(analysis: Analysis): AnalysisListItem {
+export function toAnalysisListItem(
+  analysis: Analysis
+): AnalysisListItem {
   return {
     id: analysis.id,
     topic: analysis.topic,
