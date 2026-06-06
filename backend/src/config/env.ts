@@ -19,25 +19,43 @@ const envSchema = z.object({
     .default(60_000),
   OPENAI_MAX_TOKENS: z.coerce.number().int().min(256).max(4096).default(2000),
   OPENAI_TEMPERATURE: z.coerce.number().min(0).max(2).default(0.7),
-  REDDIT_CLIENT_ID: z.string().optional(),
-  REDDIT_CLIENT_SECRET: z.string().optional(),
-  REDDIT_USER_AGENT: z
-    .string()
-    .default("ContentResearchDashboard/1.0 (by /u/contentresearch)"),
-  REDDIT_OAUTH_URL: z
-    .string()
-    .url()
-    .default("https://www.reddit.com/api/v1/access_token"),
-  REDDIT_API_BASE_URL: z
-    .string()
-    .url()
-    .default("https://oauth.reddit.com"),
-  REDDIT_SEARCH_LIMIT: z.coerce.number().int().min(1).max(25).default(5),
-  REDDIT_REQUEST_TIMEOUT_MS: z.coerce
-    .number()
-    .int()
-    .positive()
-    .default(10_000),
+  NEWS_API_KEY: z.string().optional(),
+
+NEWS_API_BASE_URL: z
+  .string()
+  .default("https://newsapi.org/v2/everything"),
+
+NEWS_SEARCH_LIMIT: z.coerce
+  .number()
+  .int()
+  .min(1)
+  .max(20)
+  .default(5),
+
+NEWS_REQUEST_TIMEOUT_MS: z.coerce
+  .number()
+  .int()
+  .positive()
+  .default(10000),
+  // REDDIT_CLIENT_ID: z.string().optional(),
+  // REDDIT_CLIENT_SECRET: z.string().optional(),
+  // REDDIT_USER_AGENT: z
+  //   .string()
+  //   .default("ContentResearchDashboard/1.0 (by /u/contentresearch)"),
+  // REDDIT_OAUTH_URL: z
+  //   .string()
+  //   .url()
+  //   .default("https://www.reddit.com/api/v1/access_token"),
+  // REDDIT_API_BASE_URL: z
+  //   .string()
+  //   .url()
+  //   .default("https://oauth.reddit.com"),
+  // REDDIT_SEARCH_LIMIT: z.coerce.number().int().min(1).max(25).default(5),
+  // REDDIT_REQUEST_TIMEOUT_MS: z.coerce
+  //   .number()
+  //   .int()
+  //   .positive()
+  //   .default(10_000),
 });
 
 export type Env = z.infer<typeof envSchema>;
