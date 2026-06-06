@@ -6,7 +6,7 @@ import { RedditSearchInput } from "../validators/reddit.validator";
 
 export class RedditController {
   async search(req: Request, res: Response): Promise<void> {
-    const { topic } = req.body as RedditSearchInput;
+    const { topic } = req.validatedBody as RedditSearchInput;
     const result: RedditSearchResponse = await redditService.searchByTopic(topic);
 
     const response: ApiResponse<RedditSearchResponse> = {

@@ -1,6 +1,6 @@
-import { Analysis } from "@prisma/client";
 import { prisma } from "../prisma/client";
 import { PaginatedResult, PaginationParams } from "../types";
+import type { Analysis } from "../types/prisma";
 
 export type CreateAnalysisData = {
   topic: string;

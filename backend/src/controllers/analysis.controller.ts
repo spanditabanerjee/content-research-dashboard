@@ -6,7 +6,7 @@ import { AnalyzeInput } from "../validators/analysis.validator";
 
 export class AnalysisController {
   async analyze(req: Request, res: Response): Promise<void> {
-    const { topic } = req.body as AnalyzeInput;
+    const { topic } = req.validatedBody as AnalyzeInput;
     const userId = req.user!.id;
 
     const result: AnalysisResult = await analysisService.analyzeTopic(

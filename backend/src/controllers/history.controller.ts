@@ -10,7 +10,7 @@ import {
 
 export class HistoryController {
   async getResults(req: Request, res: Response): Promise<void> {
-    const pagination = req.query as unknown as HistoryPaginationInput;
+    const pagination = req.validatedQuery as HistoryPaginationInput;
     const userId = req.user!.id;
 
     const result: HistoryListResponse = await historyService.getResults(
@@ -27,7 +27,7 @@ export class HistoryController {
   }
 
   async getResultById(req: Request, res: Response): Promise<void> {
-    const { id } = req.params as unknown as AnalysisIdParam;
+    const { id } = req.validatedParams as AnalysisIdParam;
     const userId = req.user!.id;
 
     const result: AnalysisResult = await historyService.getResultById(

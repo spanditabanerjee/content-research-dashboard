@@ -27,5 +27,3 @@ export async function connectPrisma(): Promise<void> {
 export async function disconnectPrisma(): Promise<void> {
   await prisma.$disconnect();
 }
-
-export type { User, Analysis, Prisma } from "@prisma/client";

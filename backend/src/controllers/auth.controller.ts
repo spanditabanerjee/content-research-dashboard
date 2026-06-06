@@ -6,7 +6,7 @@ import { LoginInput, RegisterInput } from "../validators/auth.validator";
 
 export class AuthController {
   async register(req: Request, res: Response): Promise<void> {
-    const input = req.body as RegisterInput;
+    const input = req.validatedBody as RegisterInput;
     const result: RegisterResponse = await authService.register(input);
 
     const response: ApiResponse<RegisterResponse> = {
@@ -19,7 +19,7 @@ export class AuthController {
   }
 
   async login(req: Request, res: Response): Promise<void> {
-    const input = req.body as LoginInput;
+    const input = req.validatedBody as LoginInput;
     const result: LoginResponse = await authService.login(input);
 
     const response: ApiResponse<LoginResponse> = {

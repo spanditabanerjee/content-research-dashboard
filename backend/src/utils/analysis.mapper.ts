@@ -1,4 +1,4 @@
-import { Analysis } from "@prisma/client";
+import type { Analysis } from "../types/prisma";
 import { AnalysisResult } from "../types/analysis";
 import { AnalysisListItem } from "../types/history";
 import { NormalizedRedditPost } from "../types/reddit";
