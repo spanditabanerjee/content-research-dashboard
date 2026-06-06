@@ -9,10 +9,30 @@ async function bootstrap(): Promise<void> {
   logger.info("Database connected");
 
   const app = createApp();
-  const server = app.listen(env.PORT, () => {
-    logger.info(`Server running on port ${env.PORT}`, {
+  const server = app.listen(env.PORT);
+
+  server.on("listening", () => {
+    const address = server.address();
+    const boundPort =
+      typeof address === "object" && address !== null ? address.port : env.PORT;
+
+    logger.info(`Server running on port ${boundPort}`, {
       environment: env.NODE_ENV,
     });
+  });
+
+  server.on("error", (error: NodeJS.ErrnoException) => {
+    if (error.code === "EADDRINUSE") {
+      logger.error(
+        `Port ${env.PORT} is already in use. On macOS, port 5000 is often taken by AirPlay Receiver — set PORT=5001 in .env`
+      );
+    } else {
+      logger.error("Failed to start server", {
+        message: error.message,
+        code: error.code,
+      });
+    }
+    process.exit(1);
   });
 
   const shutdown = async (signal: string): Promise<void> => {

@@ -1,4 +1,8 @@
 export type { LoginResponse, MeResponse, RegisterResponse } from "./auth";
+export type { NormalizedRedditPost, RedditSearchResponse } from "./reddit";
+export type { ContentGenerationInput, GeneratedContent } from "./openai";
+export type { AnalysisResult } from "./analysis";
+export type { AnalysisListItem, HistoryListResponse } from "./history";
 
 export interface JwtPayload {
   userId: string;
