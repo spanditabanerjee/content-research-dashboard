@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(cuid())
+  name         String?
+  email        String     @unique
+  passwordHash String     @map("password_hash")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+  analyses     Analysis[]
+
+  @@map("users")
+}
+
+model Analysis {
+  id                String   @id @default(cuid())
+  topic             String
+  sourceContent     String?  @map("source_content") @db.Text
+  summary           String?  @db.Text
+  linkedinPost      String?  @map("linkedin_post") @db.Text
+  instagramCaption  String?  @map("instagram_caption") @db.Text
+  hashtags          String?  @db.Text
+  userId            String   @map("user_id")
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@index([userId, createdAt(sort: Desc)])
+  @@map("analyses")
+}
