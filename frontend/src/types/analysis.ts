@@ -1,7 +1,7 @@
-export interface RedditPost {
+export interface NewsArticle {
   title: string;
   selftext: string;
-  subreddit: string;
+  source: string;
   score: number;
   url: string;
 }
@@ -9,7 +9,7 @@ export interface RedditPost {
 export interface AnalysisResult {
   id: string;
   topic: string;
-  sourceContent: RedditPost[];
+  sourceContent: NewsArticle[];
   summary: string;
   linkedinPost: string;
   instagramCaption: string;

@@ -1,10 +1,10 @@
 import { ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { RedditPost } from "@/types/analysis";
+import { NewsArticle } from "@/types/analysis";
 
 interface RedditSourcesProps {
-  posts: RedditPost[];
+  posts: NewsArticle[];
 }
 
 export function RedditSources({ posts }: RedditSourcesProps) {
@@ -12,7 +12,7 @@ export function RedditSources({ posts }: RedditSourcesProps) {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Reddit Sources</CardTitle>
+          <CardTitle>News Sources</CardTitle>
           <CardDescription>No source content available.</CardDescription>
         </CardHeader>
       </Card>
@@ -22,9 +22,9 @@ export function RedditSources({ posts }: RedditSourcesProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Reddit Sources</CardTitle>
+        <CardTitle>News Sources</CardTitle>
         <CardDescription>
-          Top {posts.length} relevant post{posts.length !== 1 ? "s" : ""} from Reddit
+          Top {posts.length} relevant post{posts.length !== 1 ? "s" : ""} from News
         </CardDescription>
       </CardHeader>
 
@@ -35,7 +35,7 @@ export function RedditSources({ posts }: RedditSourcesProps) {
             className="rounded-lg border border-slate-800 bg-slate-950/50 p-4"
           >
             <div className="flex flex-wrap items-center gap-2">
-              <Badge>r/{post.subreddit}</Badge>
+              <Badge>r/{post.source}</Badge>
               <Badge className="bg-indigo-500/10 text-indigo-300">
                 {post.score} pts
               </Badge>
@@ -50,7 +50,7 @@ export function RedditSources({ posts }: RedditSourcesProps) {
               rel="noopener noreferrer"
               className="mt-3 inline-flex items-center gap-1 text-sm text-indigo-400 hover:text-indigo-300"
             >
-              View post
+              Read article
               <ExternalLink className="h-3.5 w-3.5" />
             </a>
           </li>
